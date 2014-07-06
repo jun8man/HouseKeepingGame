@@ -39,11 +39,17 @@
                     'You have to do as following housekeeping for you and your lovely family!'
                      + str
                      + "<br>Do your best!";
-            }else{
+            }
+            else{
                 var assignResult = assignTask(orders, num);
                 var str;
                 for(key in assignResult){
-                    str = str + "<br> #" + key + " was assigned as following Tasks.<br>" + assignResult[key] + "<br>";
+                    if(key != 1){
+                        str = str + "<br>#" + key + " was assigned as following Tasks.<br>" + assignResult[key] + "<br>";
+                    }
+                    else{
+                        str = "#" + key + " was assigned as following Tasks.<br>" + assignResult[key] + "<br>";
+                    }
                 }
                 document.getElementById('result').innerHTML =
                     str + "<br> Let's enjoy HOUSEKEEPING!";
