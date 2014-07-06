@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Housekeeping Game</title>
+</head>
+<body>
+    <h1>Housekeeping Game</h1>
+    <p>人数: <input type="text" id="num"></p>
+    <p><input type="button" value="God said..." onclick="GodSaid();"></p>
+    <p id="result"></p>
+    <script>
+        function GodSaid(){
+            var orders = [
+                'Make breakfast',
+                'Make lunch',
+                'Make dinner',
+                'Buy ingredients',
+                'Do the dishes',
+                'Put your toys away',
+                'Put your laundry away',
+                'Do the laundry',
+                'Clean down the bedroom',
+                'Clean down the bathroom',
+                'Clean down the bath'
+            ];
+
+            // get random value from number of the participants.
+            // e.g.) 4 -> 1..4
+            //       0..3 + 1
+            var num = document.getElementById('num').value;
+
+            if(num < 2){
+                var str;
+                for(var i = 0; i != orders.length; i++){
+                    str = str + "<br> - " + orders[i];
+                }
+                document.getElementById('result').innerHTML =
+                    'You have to do as following housekeeping for you and your lovely family!'
+                     + str
+                     + "<br>Do your best!";
+            }else{
+                var assignResult = assignTask(orders, num);
+                var str;
+                for(key in assignResult){
+                    str = str + "<br> #" + key + " was assigned as following Tasks.<br>" + assignResult[key] + "<br>";
+                }
+                document.getElementById('result').innerHTML =
+                    str + "<br> Let's enjoy HOUSEKEEPING!";
+            }
+        }
+
+        function assignTask(data, people){
+            // Initialized.
+            var assignTable = {};
+            for(var i = 1; i <= people; i++){
+                  assignTable[i] = 'No Task';
+            }
+
+            // copy the orders.
+            var tmp = data.concat();
+            console.log(tmp);
+
+            while(tmp.length > 0){
+                // get random value.
+                // 0 to n -> Math.floor(Math.random() * ( n + 1 )).
+                var rmIndex = Math.floor(Math.random() * tmp.length);
+                var order = tmp[rmIndex];
+
+                // remove gotten item.
+                tmp.splice(rmIndex, 1);
+
+                // Set PIC.
+                var p1 = Math.floor(Math.random() * people) + 1;
+
+                if(assignTable[p1] == "No Task"){
+                    assignTable[p1] = ' - ' + order;
+                }
+                else{
+                    assignTable[p1] = assignTable[p1] + "<br> - " + order;
+                }
+            }
+
+            return assignTable;
+        }
+    </script>
+</body>
+</html>
